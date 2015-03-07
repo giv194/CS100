@@ -1,5 +1,4 @@
-#ifndef ACTORNODE_HPP
-#define ACTORNODE_HPP
+#pragma once
 
 #include "GraphNode.hpp"
 #include <string>
@@ -7,7 +6,7 @@
 
 using namespace std;
 
-class ActorNode{
+class ActorNode {
 public:
 	string name;
 	unordered_map<string, GraphNode> movieList;
@@ -17,7 +16,4 @@ public:
 	};
 
 	void add(GraphNode& movie);
-/*	MovieEdge* getNext();*/
-
 };
-#endif //ACTORNODE_HPP

@@ -27,10 +27,6 @@ class ActorGraph {
 public:
   // Maybe add class data structure(s) here
 
-  ActorGraph(void);
-
-  ~ActorGraph();
-
   // Maybe add some more methods here
   void build(string &ActorName, string &MovieName, int year);
   
@@ -48,8 +44,8 @@ public:
   void search(ofstream& out, string &actor1, string &actor2);
   
 private:
-  unordered_map<string, GraphNode*>* actors;
-  unordered_map<string, GraphNode*>* movies;
+  unordered_map<string, GraphNode*> actors;
+  unordered_map<string, GraphNode*> movies;
 };
 
 

@@ -1,13 +1,10 @@
-#ifndef GRAPHNODE_HPP
-#define GRAPHNODE_HPP
-
-
+#pragma once
 #include <string>
 #include <unordered_map>
 
 using namespace std;
 
-class GraphNode{
+class GraphNode {
 public:
 	
 	GraphNode(string& s, int i);
@@ -21,4 +18,3 @@ public:
 
 	void add(GraphNode* node);
 };
-#endif//GRAPHNODE_HPP

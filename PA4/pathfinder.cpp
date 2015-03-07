@@ -8,13 +8,15 @@
 #include <unordered_map>
 #include <set>
 
-int main(int argc, char* argv[]){
-	if(argc < 5)
+int main(int argc, char* argv[])
+{
+	if(argc < 5) {
+        std::cerr << "run: test_in u test_search out" << std::endl;
 		return 1;
-	ActorGraph* graph;
+    }
+	ActorGraph* graph = new ActorGraph();
 	graph->loadFromFile(argv[1], false);
 	
-
 	ifstream infile(argv[3]);
 	ofstream writeout(argv[4]);
 	bool have_header = false;
