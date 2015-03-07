@@ -12,6 +12,6 @@ GraphNode::GraphNode(string& s, int i){
 	prev = 0;
 }
 
-void GraphNode::add(GraphNode& node){
-	adj.insert(make_pair(node.name, node));
+void GraphNode::add(GraphNode* node){
+	adj.insert(make_pair(node->name, node));
 }

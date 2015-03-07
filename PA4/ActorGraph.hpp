@@ -48,8 +48,8 @@ public:
   void search(ofstream& out, string &actor1, string &actor2);
   
 private:
-  unordered_map<string, GraphNode>* actors;
-  unordered_map<string, GraphNode>* movies;
+  unordered_map<string, GraphNode*>* actors;
+  unordered_map<string, GraphNode*>* movies;
 };
 
 

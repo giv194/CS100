@@ -17,8 +17,8 @@ public:
 	int dist;
 	GraphNode* prev;
 
-	unordered_map<string, GraphNode> adj;
+	unordered_map<string, GraphNode*> adj;
 
-	void add(GraphNode& node);
+	void add(GraphNode* node);
 };
 #endif//GRAPHNODE_HPP
