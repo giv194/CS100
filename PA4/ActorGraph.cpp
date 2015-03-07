@@ -6,23 +6,38 @@
  * This file is meant to exist as a container for starter code that you can use to read the input file format
  * defined in movie_casts.tsv. Feel free to modify any/all aspects as you wish.
  */
+#include "ActorGraph.hpp"
  
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <iterator>
+#include <vector>
+#include <unordered_map>
+#include <queue>
 
 using namespace std;
 
-ActorGraph::ActorGraph(void) {}
+void found(ofstream& out, GraphNode* end);
+
+ActorGraph::ActorGraph(void) : actors(0), movies (0){
+}
+
+ActorGraph::~ActorGraph(){
+/*  actors.erase(actors.begin(), actors.end());
+  delete actors;
+  movies.erase(movies.begin(), movies.end());
+  delete movies;
+*/
+}
 
 
 bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges)
 {
-  
+  //ActorGraph::actors;
   // Initialize the file stream
   ifstream infile(in_filename);
-
   bool have_header = false;
   
   // keep reading lines until the end of file is reached
@@ -63,6 +78,7 @@ bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges)
     string movie_title(record[1]);
     int movie_year = stoi(record[2]);
     
+    build(actor_name, movie_title, movie_year);
     // we have an actor/movie relationship, now what?
   }
   
@@ -75,3 +91,82 @@ bool ActorGraph::loadFromFile(const char* in_filename, bool use_weighted_edges)
   
   return true;
 }
+
+void ActorGraph::build(string &actorName, string &movieName, int year){
+  unordered_map<string, GraphNode*> actors;
+  unordered_map<string, GraphNode*> movies;
+
+  //unordered_map<string, GraphNode*> ActorGraph::movies;
+  //actors[actorName] = new GraphNode(actorName, 0);
+
+  unordered_map<string, GraphNode*>::iterator it = actors.find(actorName);
+  if(it == actors.end()){
+    GraphNode* a = new GraphNode(actorName, 0);
+    actors.insert(make_pair(actorName, a));
+  }
+  unordered_map<string, GraphNode*>::iterator mit = movies.find(movieName);
+  if(mit == movies.end()){
+    GraphNode* m = new GraphNode(movieName, 1 + (2015 - year));
+    movies.insert(make_pair(movieName, m));
+  }
+  it = actors.find(actorName);
+  mit = movies.find(movieName);
+  it->second->add((mit->second));
+  mit->second->add((it->second));
+
+/*
+  if(actors[ActorName] == 0)
+    actors[ActorName] = new GraphNode(ActorName, -1);
+
+  if(movies[MovieName + to_string(year)] == 0)
+    movies[MovieName + to_string(year)] = new GraphNode(MovieName, 1 + (2015 - year));
+
+  movies[MovieName + to_string(year)]->add(actors[ActorName]);
+  actors[ActorName]->add(movies[MovieName + to_string(year)]);
+  */
+}
+
+void ActorGraph::search(ofstream& out, string& actor1, string& actor2){
+  /*cout << this->actors[actor1] << endl;
+  cout << this->actors[actor2] << endl;
+*/
+  unordered_map<string, GraphNode*>::iterator sit = actors.find(actor1);
+//  unordered_map<string, GraphNode*>::iterator eit = actors.find(actor2);
+
+  unordered_map<string, GraphNode*>::iterator iit;
+
+  queue<GraphNode*> bfs;
+  int dist = 0;
+  bfs.push(sit->second);
+  while(!bfs.empty()){
+    dist++;
+    GraphNode* current = bfs.front();
+    bfs.pop();
+    if(!current->name.compare(actor2)){
+      found(out, current);
+      return;
+    }
+    iit = current->adj.begin();
+    for(; iit != current->adj.end(); iit++){
+      bfs.push(iit->second);
+    }
+  }
+}
+
+void found(ofstream& out, GraphNode* end){
+  if(end->prev == 0) {
+    if(end->weight == -1) {
+      out << "(" << end->name << ")" << "--";
+      return;
+    }
+    else
+      return;
+  }
+  return;
+}
+
+
+
+
+
+

@@ -11,20 +11,28 @@
 #define ACTORGRAPH_HPP
 
 #include <iostream>
+#include <unordered_map>
+#include <string>
+
+#include "ActorNode.hpp"
+#include "MovieEdge.hpp"
+#include "GraphNode.hpp"
 
 // Maybe include some data structures here
 
 using namespace std;
 
+
 class ActorGraph {
-protected:
-  
+public:
   // Maybe add class data structure(s) here
 
-public:
   ActorGraph(void);
 
+  ~ActorGraph();
+
   // Maybe add some more methods here
+  void build(string &ActorName, string &MovieName, int year);
   
   /** You can modify this method definition as you wish
    *
@@ -36,7 +44,12 @@ public:
    * return true if file was loaded sucessfully, false otherwise
    */
   bool loadFromFile(const char* in_filename, bool use_weighted_edges);
+
+  void search(ofstream& out, string &actor1, string &actor2);
   
+private:
+  unordered_map<string, GraphNode*> actors;
+  unordered_map<string, GraphNode*> movies;
 };
 
 
