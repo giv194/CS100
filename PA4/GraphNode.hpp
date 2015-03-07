@@ -14,10 +14,11 @@ public:
 
 	string name;
 	int weight;
+	int dist;
 	GraphNode* prev;
-	
-	unordered_map<string, GraphNode*> adj;
 
-	void add(GraphNode* node);
+	unordered_map<string, GraphNode> adj;
+
+	void add(GraphNode& node);
 };
 #endif//GRAPHNODE_HPP

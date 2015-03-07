@@ -14,8 +14,8 @@
 #include <unordered_map>
 #include <string>
 
-#include "ActorNode.hpp"
-#include "MovieEdge.hpp"
+//#include "ActorNode.hpp"
+//#include "MovieEdge.hpp"
 #include "GraphNode.hpp"
 
 // Maybe include some data structures here
@@ -48,8 +48,8 @@ public:
   void search(ofstream& out, string &actor1, string &actor2);
   
 private:
-  unordered_map<string, GraphNode*> actors;
-  unordered_map<string, GraphNode*> movies;
+  unordered_map<string, GraphNode>* actors;
+  unordered_map<string, GraphNode>* movies;
 };
 
 
